@@ -2,14 +2,12 @@ import asyncio
 import os
 import time
 from typing import Optional
-import aioredis
 import uvicorn
 from dotenv import load_dotenv
 from fastapi import FastAPI, Query
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 from fastapi_cache import FastAPICache
-from fastapi_cache.backends.redis import RedisBackend
 from fastapi_cache.decorator import cache
 from helper.is_site_available import check_if_site_available
 
@@ -303,16 +301,6 @@ async def get_all_supported_sites():
         if all_sites[site]["website"]
     ]
     return {"supported_sites": sites_list}
-
-# @app.on_event("startup")
-# async def startup():
-#     PYTHON_ENV = os.getenv("PYTHON_ENV", "dev")
-#     if PYTHON_ENV == "prod":
-#         HOST = os.getenv("REDIS_URI", "redis://localhost")
-#     else:
-#         HOST = "redis://localhost"
-#     redis = aioredis.from_url(HOST, encoding="utf8", decode_responses=True)
-#     FastAPICache.init(RedisBackend(redis), prefix="fastapi-cache")
 
 
 if __name__ == "__main__":
